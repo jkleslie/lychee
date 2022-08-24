@@ -20,7 +20,6 @@ use Illuminate\Database\Query\Builder as BaseBuilder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Safe\Exceptions\ArrayException;
-use function Safe\usort;
 
 /**
  * Deletes the albums with the designated IDs **efficiently**.

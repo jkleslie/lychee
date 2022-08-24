@@ -82,7 +82,7 @@ class SizeVariant extends Model
 	public $timestamps = false;
 
 	/**
-	 * @var string[]
+	 * @var array<string,string>
 	 */
 	protected $casts = [
 		'id' => 'integer',
@@ -95,8 +95,8 @@ class SizeVariant extends Model
 	];
 
 	/**
-	 * @var string[] The list of attributes which exist as columns of the DB
-	 *               relation but shall not be serialized to JSON
+	 * @var array<int,string> The list of attributes which exist as columns of the DB
+	 *                        relation but shall not be serialized to JSON
 	 */
 	protected $hidden = [
 		'id', // irrelevant, because a size variant is always serialized as an embedded object of its photo

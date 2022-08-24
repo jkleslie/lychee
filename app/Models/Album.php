@@ -36,10 +36,10 @@ use Kalnoy\Nestedset\NodeTrait;
  * @property int               $_lft
  * @property int               $_rgt
  *
- * @method static       AlbumBuilder query()                       Begin querying the model.
- * @method static       AlbumBuilder with(array|string $relations) Begin querying the model with eager loading.
- * @method AlbumBuilder newModelQuery()                            Get a new, "pure" query builder for the model's table without any scopes, eager loading, etc.
- * @method AlbumBuilder newQuery()                                 Get a new query builder for the model's table.
+ * @method static AlbumBuilder query()                       Begin querying the model.
+ * @method static AlbumBuilder with(array|string $relations) Begin querying the model with eager loading.
+ * @method        AlbumBuilder newModelQuery()               Get a new, "pure" query builder for the model's table without any scopes, eager loading, etc.
+ * @method        AlbumBuilder newQuery()                    Get a new query builder for the model's table.
  */
 class Album extends BaseAlbum implements Node
 {
@@ -76,8 +76,8 @@ class Album extends BaseAlbum implements Node
 	];
 
 	/**
-	 * @var string[] The list of attributes which exist as columns of the DB
-	 *               relation but shall not be serialized to JSON
+	 * @var array<int, string> The list of attributes which exist as columns of the DB
+	 *                         relation but shall not be serialized to JSON
 	 */
 	protected $hidden = [
 		'base_class', // don't serialize base class as a relation, the attributes of the base class are flatly merged into the JSON result

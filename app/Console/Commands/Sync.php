@@ -12,7 +12,6 @@ use App\Models\Configs;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
-use function Safe\sprintf;
 use Symfony\Component\Console\Exception\ExceptionInterface as SymfonyConsoleException;
 
 class Sync extends Command
@@ -77,6 +76,7 @@ class Sync extends Command
 
 				return 1;
 			}
+			$directory = (string) $directory;
 			$owner_id = (int) $this->option('owner_id'); // in case no ID provided -> import as root user
 			$album_id = $this->option('album_id'); // in case no ID provided -> import to root folder
 			if (is_array($album_id)) {

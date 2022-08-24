@@ -3,7 +3,7 @@
 namespace App\Actions\WebAuth;
 
 use App\Models\User;
-use DarkGhostHunter\Larapass\Facades\WebAuthn;
+use Laragear\WebAuthn\WebAuthn;
 use Webauthn\PublicKeyCredentialRequestOptions;
 
 class GenerateAuthentication

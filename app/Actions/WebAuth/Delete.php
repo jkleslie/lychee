@@ -15,6 +15,6 @@ class Delete
 	{
 		/** @var User $user */
 		$user = Auth::user() ?? throw new UnauthenticatedException();
-		$user->removeCredential($ids);
+		$user->flushCredentials($ids);
 	}
 }

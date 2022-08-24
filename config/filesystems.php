@@ -41,31 +41,21 @@ return [
 	*/
 
 	'disks' => [
-		// Lychee uses the disk "images" to store the media files
-		'images' => [
+		'local' => [
 			'driver' => 'local',
-			'root' => env('LYCHEE_UPLOADS', public_path('uploads/')),
-			'url' => env('LYCHEE_UPLOADS_URL', 'uploads/'),
-			'visibility' => env('LYCHEE_IMAGE_VISIBILITY', 'public'),
-			'permissions' => [
-				'file' => [
-					'world' => 00666,
-					'public' => 00664,
-					'private' => 00660,
-				],
-				'dir' => [
-					'world' => 02777,
-					'public' => 02775,
-					'private' => 02770,
-				],
-			],
+			'root' => storage_path('app'),
+			'throw' => false,
 		],
 
-		// This is an example how the "images" disk can be hosted on an AWS S3
-		// ATTENTION: This is NOT supported yet!!!
-		// This is only a placeholder/reminder for the future
-		/*
-		'images' => [
+		'public' => [
+			'driver' => 'local',
+			'root' => storage_path('app/public'),
+			'url' => env('APP_URL') . '/storage',
+			'visibility' => 'public',
+			'throw' => false,
+		],
+
+		's3' => [
 			'driver' => 's3',
 			'key' => env('AWS_ACCESS_KEY_ID'),
 			'secret' => env('AWS_SECRET_ACCESS_KEY'),
@@ -73,7 +63,17 @@ return [
 			'bucket' => env('AWS_BUCKET'),
 			'url' => env('AWS_URL'),
 			'endpoint' => env('AWS_ENDPOINT'),
-		],*/
+			'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
+			'throw' => false,
+		],
+
+		// Lychee uses the disk "images" to store the media files
+		'images' => [
+			'driver' => 'local',
+			'root' => env('LYCHEE_UPLOADS', public_path('uploads/')),
+			'url' => env('LYCHEE_UPLOADS_URL', 'uploads/'),
+			'visibility' => 'public',
+		],
 
 		// Lychee uses this disk to store the customized CSS file provided by the user
 		// ATTENTION: This disk MUST ALWAYS point to the local `./public/dist` directory.

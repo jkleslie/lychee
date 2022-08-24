@@ -10,7 +10,6 @@ use App\Actions\WebAuth\VerifyAuthentication;
 use App\Actions\WebAuth\VerifyRegistration;
 use App\Exceptions\Internal\InvalidUserIdException;
 use App\Exceptions\UnauthenticatedException;
-use DarkGhostHunter\Larapass\Http\WebAuthnRules;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Collection;
@@ -19,8 +18,6 @@ use Webauthn\PublicKeyCredentialRequestOptions;
 
 class WebAuthController extends Controller
 {
-	use WebAuthnRules;
-
 	private GenerateRegistration $generateRegistration;
 	private VerifyRegistration $verifyRegistration;
 	private GenerateAuthentication $generateAuthentication;

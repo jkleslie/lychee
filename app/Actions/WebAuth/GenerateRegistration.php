@@ -3,8 +3,8 @@
 namespace App\Actions\WebAuth;
 
 use App\Exceptions\UnauthenticatedException;
-use DarkGhostHunter\Larapass\Facades\WebAuthn;
 use Illuminate\Support\Facades\Auth;
+use Laragear\WebAuthn\WebAuthn;
 use Webauthn\PublicKeyCredentialCreationOptions;
 
 class GenerateRegistration

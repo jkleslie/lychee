@@ -3,6 +3,7 @@
 namespace App\Image;
 
 use App\Exceptions\MediaFileOperationException;
+use function Safe\stream_filter_append;
 
 /**
  * Class BinaryBlob.
@@ -103,8 +104,12 @@ abstract class BinaryBlob
 	 */
 	protected static function appendStatFilter($stream): StreamStat
 	{
+		// TODO: @nagmat84 it says that $streamStat needs to be an array in the function call of stream_filter_appen :/
+		// References:
+		// https://github.com/thecodingmachine/safe/blob/0653752f6c2d45e0640fa24bf789cae367a501d3/generated/stream.php#L90
+		// https://www.php.net/manual/en/function.stream-filter-append.php
 		$streamStat = new StreamStat();
-		\Safe\stream_filter_append(
+		stream_filter_append(
 			$stream,
 			StreamStatFilter::REGISTERED_NAME,
 			STREAM_FILTER_READ,
