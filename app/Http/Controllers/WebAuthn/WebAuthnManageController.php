@@ -2,32 +2,33 @@
 
 namespace App\Http\Controllers\WebAuthn;
 
-use App\Actions\WebAuth\Delete as DeleteDevices;
-use App\Actions\WebAuth\Lists as ListDevices;
+use App\Exceptions\UnauthenticatedException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 
 class WebAuthnManageController
 {
-	private ListDevices $listDevices;
-	private DeleteDevices $deleteDevices;
-
-	public function __construct(
-		ListDevices $listDevices,
-		DeleteDevices $deleteDevices
-	) {
-		$this->listDevices = $listDevices;
-		$this->deleteDevices = $deleteDevices;
-	}
-
+	/**
+	 * @throws UnauthenticatedException
+	 */
 	public function list(): Collection
 	{
-		return $this->listDevices->do();
+		/** @var \App\Models\User */
+		$user = Auth::user() ?? throw new UnauthenticatedException();
+
+		return $user->webAuthnCredentials;
 	}
 
+	/**
+	 * @throws UnauthenticatedException
+	 */
 	public function delete(Request $request): void
 	{
 		$id = $request->validate(['id' => 'required|string']);
-		$this->deleteDevices->do($id);
+
+		/** @var User $user */
+		$user = Auth::user() ?? throw new UnauthenticatedException();
+		$user->webAuthnCredentials()->where('id', $id)->delete();
 	}
 }
