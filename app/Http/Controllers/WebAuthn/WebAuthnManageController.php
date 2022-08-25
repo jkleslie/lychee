@@ -14,7 +14,7 @@ class WebAuthnManageController
 	 */
 	public function list(): Collection
 	{
-		/** @var \App\Models\User */
+		/** @var \App\Models\User $user */
 		$user = Auth::user() ?? throw new UnauthenticatedException();
 
 		return $user->webAuthnCredentials;
@@ -27,7 +27,7 @@ class WebAuthnManageController
 	{
 		$id = $request->validate(['id' => 'required|string']);
 
-		/** @var User $user */
+		/** @var \App\Models\User $user */
 		$user = Auth::user() ?? throw new UnauthenticatedException();
 		$user->webAuthnCredentials()->where('id', $id)->delete();
 	}

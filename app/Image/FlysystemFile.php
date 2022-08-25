@@ -2,11 +2,12 @@
 
 namespace App\Image;
 
+use App\Exceptions\FlySystemLycheeException;
 use App\Exceptions\MediaFileOperationException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem;
-use League\Flysystem\Adapter\Local as LocalAdapter;
-use League\Flysystem\Exception as FlyException;
+use League\Flysystem\FilesystemException;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use function Safe\fclose;
 
 /**
@@ -43,9 +44,9 @@ class FlysystemFile extends MediaFile
 			$this->stream = $this->disk->readStream($this->relativePath);
 			if (!is_resource($this->stream)) {
 				$this->stream = null;
-				throw new FlyException('Filesystem::readStream failed');
+				throw new FlySystemLycheeException('Filesystem::readStream failed');
 			}
-		} catch (\ErrorException|FlyException|FileNotFoundException $e) {
+		} catch (\ErrorException|FilesystemException|FileNotFoundException $e) {
 			throw new MediaFileOperationException($e->getMessage(), $e);
 		}
 
@@ -65,11 +66,11 @@ class FlysystemFile extends MediaFile
 			// Note that v1 also provides a method `writeStream`, but this is a misnomer.
 			// See: https://flysystem.thephpleague.com/v2/docs/what-is-new/
 			if (!$this->disk->put($this->relativePath, $stream)) {
-				throw new FlyException('Filesystem::put failed');
+				throw new FlySystemLycheeException('Filesystem::put failed');
 			}
 
 			return $streamStat;
-		} catch (\ErrorException|FlyException $e) {
+		} catch (\ErrorException|FilesystemException $e) {
 			throw new MediaFileOperationException($e->getMessage(), $e);
 		}
 	}
@@ -81,9 +82,9 @@ class FlysystemFile extends MediaFile
 	{
 		try {
 			if (!$this->disk->delete($this->relativePath)) {
-				throw new FlyException('Filesystem::delete failed');
+				throw new FlySystemLycheeException('Filesystem::delete failed');
 			}
-		} catch (\ErrorException|FlyException $e) {
+		} catch (\ErrorException|FilesystemException $e) {
 			throw new MediaFileOperationException($e->getMessage(), $e);
 		}
 	}
@@ -166,7 +167,7 @@ class FlysystemFile extends MediaFile
 	 */
 	public function isLocalFile(): bool
 	{
-		return $this->disk->getDriver()->getAdapter() instanceof LocalAdapter;
+		return $this->disk->getDriver()->getAdapter() instanceof LocalFilesystemAdapter;
 	}
 
 	/**

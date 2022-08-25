@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use League\Flysystem\Adapter\Local;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 
 // TODO: Uncomment the following line, if Lychee really starts to support AWS s3.
 // The previous code already contained some first steps for S3, but relied
@@ -175,7 +175,7 @@ class SizeVariant extends Model
 			return $imageDisk->temporaryUrl($this->short_path, now()->addSeconds($maxLifetime));
 		}*/
 
-		if ($storageAdapter instanceof Local) {
+		if ($storageAdapter instanceof LocalFilesystemAdapter) {
 			/** @var ?SymLink $symLink */
 			$symLink = $this->sym_links()->latest()->first();
 			if ($symLink === null || $symLink->created_at->isBefore(now()->subSeconds($gracePeriod))) {

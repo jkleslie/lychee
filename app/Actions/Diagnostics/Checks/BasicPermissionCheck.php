@@ -11,10 +11,12 @@ use App\Models\SymLink;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
-use League\Flysystem\Adapter\Local as LocalFlysystem;
+use League\Flysystem\Local\LocalFilesystemAdapter;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
+use Safe\Exceptions\FilesystemException;
 use Safe\Exceptions\PosixException;
+use function Safe\fileperms;
 use function Safe\posix_getgrgid;
 use function Safe\posix_getgroups;
 
@@ -93,7 +95,7 @@ class BasicPermissionCheck implements DiagnosticCheckInterface
 		];
 
 		foreach ($disks as $disk) {
-			if ($disk->getDriver()->getAdapter() instanceof LocalFlysystem) {
+			if ($disk->getDriver()->getAdapter() instanceof LocalFilesystemAdapter) {
 				$this->checkDirectoryPermissionsRecursively($disk->path(''), $errors);
 			}
 		}
@@ -138,8 +140,9 @@ class BasicPermissionCheck implements DiagnosticCheckInterface
 				return;
 			}
 
-			$actualPerm = fileperms($path);
-			if ($actualPerm === false) {
+			try {
+				$actualPerm = fileperms($path);
+			} catch (FilesystemException) {
 				$errors[] = sprintf('Warning: Unable to determine permissions for %s' . PHP_EOL, $path);
 
 				return;
