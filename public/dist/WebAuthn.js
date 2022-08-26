@@ -29,10 +29,10 @@
      * @type {{registerOptions: string, register: string, loginOptions: string, login: string, }}
      */
     #routes = {
-        registerOptions: "webauthn/register/options",
-        register: "webauthn/register",
-        loginOptions: "webauthn/login/options",
-        login: "webauthn/login",
+        registerOptions: "WebAuthn/register/options",
+        register: "WebAuthn/register",
+        loginOptions: "WebAuthn/login/options",
+        login: "WebAuthn/login",
     }
 
     /**

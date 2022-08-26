@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\WebAuthn;
 
-use App\Http\Requests\WebAuthn\AssertionRequest;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
 use Laragear\WebAuthn\Http\Requests\AssertedRequest;
+use Laragear\WebAuthn\Http\Requests\AssertionRequest;
 use function response;
 
 class WebAuthnLoginController
@@ -19,7 +19,7 @@ class WebAuthnLoginController
 	 */
 	public function options(AssertionRequest $request): Responsable
 	{
-		return $request->toVerify($request->validated()['user_id']);
+		return $request->toVerify($request->validate(['user_id' => 'sometimes|int'])['user_id']);
 	}
 
 	/**
