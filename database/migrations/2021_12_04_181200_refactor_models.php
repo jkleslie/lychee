@@ -1482,27 +1482,29 @@ class RefactorModels extends Migration
 	 */
 	private function copyStructurallyUnchangedTables(): void
 	{
-		$pgBar = $this->getProgressBar('web_authn_credentials');
-		$credentials = DB::table('web_authn_credentials_tmp')->get();
-		$pgBar->setMaxSteps($credentials->count());
-		foreach ($credentials as $credential) {
-			$pgBar->advance();
-			DB::table('web_authn_credentials')->insert([
-				'id' => $credential->id,
-				'created_at' => $credential->created_at,
-				'updated_at' => $credential->updated_at,
-				'disabled_at' => $credential->disabled_at,
-				'user_id' => $credential->user_id,
-				'name' => $credential->name,
-				'type' => $credential->type,
-				'transports' => $credential->transports,
-				'attestation_type' => $credential->attestation_type,
-				'trust_path' => $credential->trust_path,
-				'aaguid' => $credential->aaguid,
-				'public_key' => $credential->public_key,
-				'counter' => $credential->counter,
-				'user_handle' => $credential->user_handle,
-			]);
+		if (Schema::hasTable('web_authn_credentials')) {
+			$pgBar = $this->getProgressBar('web_authn_credentials');
+			$credentials = DB::table('web_authn_credentials_tmp')->get();
+			$pgBar->setMaxSteps($credentials->count());
+			foreach ($credentials as $credential) {
+				$pgBar->advance();
+				DB::table('web_authn_credentials')->insert([
+					'id' => $credential->id,
+					'created_at' => $credential->created_at,
+					'updated_at' => $credential->updated_at,
+					'disabled_at' => $credential->disabled_at,
+					'user_id' => $credential->user_id,
+					'name' => $credential->name,
+					'type' => $credential->type,
+					'transports' => $credential->transports,
+					'attestation_type' => $credential->attestation_type,
+					'trust_path' => $credential->trust_path,
+					'aaguid' => $credential->aaguid,
+					'public_key' => $credential->public_key,
+					'counter' => $credential->counter,
+					'user_handle' => $credential->user_handle,
+				]);
+			}
 		}
 
 		$pgBar = $this->getProgressBar('pages');
