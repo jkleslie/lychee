@@ -6,6 +6,7 @@ use App\Exceptions\FlySystemLycheeException;
 use App\Exceptions\MediaFileOperationException;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Contracts\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Storage;
 use League\Flysystem\FilesystemException;
 use League\Flysystem\Local\LocalFilesystemAdapter;
 use function Safe\fclose;
@@ -14,7 +15,7 @@ use function Safe\fclose;
  * Class FlysystemFile.
  *
  * This class is based on legacy Flysystem v1 which ships with Laravel 8.
- * Laravel 9 will migrate to Flysystem v2 which provides a different and
+ * Laravel 9 will migrate to Flysystem v3 which provides a different and
  * more consistent API.
  *
  * For v1, this documentation is relevant:
@@ -61,11 +62,7 @@ class FlysystemFile extends MediaFile
 		try {
 			$streamStat = $collectStatistics ? static::appendStatFilter($stream) : null;
 
-			// TODO: `put` must be replaced by `writeStream` when Flysystem 2 is shipped with Laravel 9
-			// This will also be more consistent with `readStream`.
-			// Note that v1 also provides a method `writeStream`, but this is a misnomer.
-			// See: https://flysystem.thephpleague.com/v2/docs/what-is-new/
-			if (!$this->disk->put($this->relativePath, $stream)) {
+			if (!$this->disk->writeStream($this->relativePath, $stream)) {
 				throw new FlySystemLycheeException('Filesystem::put failed');
 			}
 
@@ -179,6 +176,6 @@ class FlysystemFile extends MediaFile
 			throw new MediaFileOperationException('file is not hosted locally');
 		}
 
-		return new NativeLocalFile($this->disk->path($this->relativePath));
+		return new NativeLocalFile(Storage::path($this->relativePath));
 	}
 }
