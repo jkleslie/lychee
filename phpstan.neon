@@ -52,7 +52,6 @@ parameters:
 		- '#Parameter .* of method .*::newEloquentBuilder\(\) should be contravariant with parameter \$query \(mixed\) of method Kalnoy\\Nestedset\\Node::newEloquentBuilder\(\)#'
 		- '#Call to an undefined method Geocoder\\Location::getDisplayName\(\)#'
 		- '#Call to an undefined method COM::getfolder\(\).#'
-		- '#Call to an undefined method League\\Flysystem\\FilesystemOperator::getAdapter\(\)#'
 
 		- '#Property .* \(App\\Models\\.*(\|null)?\) does not accept (Illuminate\\Database\\Eloquent\\Collection<int, Illuminate\\Database\\Eloquent\\Model>\|)?Illuminate\\Database\\Eloquent\\Model(\|null)?.#'
 		- '#Property .* \(Illuminate\\Database\\Eloquent\\Collection&iterable<App\\Models\\.*>\) does not accept Illuminate\\Database\\Eloquent\\Collection<int, Illuminate\\Database\\Eloquent\\Model>(\|Illuminate\\Database\\Eloquent\\Model)?.#'

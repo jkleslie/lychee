@@ -21,7 +21,7 @@ class LocalStorageOnly
 	 */
 	public function handle(Request $request, \Closure $next)
 	{
-		$storageAdapter = Storage::disk()->getDriver()->getAdapter();
+		$storageAdapter = Storage::disk()->getAdapter();
 		if (!($storageAdapter instanceof LocalFilesystemAdapter)) {
 			throw new RequestUnsupportedException($request->url() . ' not implemented for non-local storage');
 		}

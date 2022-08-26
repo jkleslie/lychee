@@ -167,7 +167,7 @@ class FlysystemFile extends MediaFile
 	 */
 	public function isLocalFile(): bool
 	{
-		return $this->disk->getDriver()->getAdapter() instanceof LocalFilesystemAdapter;
+		return $this->disk->getAdapter() instanceof LocalFilesystemAdapter;
 	}
 
 	/**

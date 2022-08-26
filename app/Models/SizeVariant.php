@@ -168,7 +168,7 @@ class SizeVariant extends Model
 		$maxLifetime = Configs::getValueAsInt('SL_life_time_days') * 24 * 60 * 60;
 		$gracePeriod = $maxLifetime / 3;
 
-		$storageAdapter = $imageDisk->getDriver()->getAdapter();
+		$storageAdapter = $imageDisk->getAdapter();
 
 		// TODO: Uncomment these line when Laravel really starts to support s3
 		/*if ($storageAdapter instanceof AwsS3Adapter) {

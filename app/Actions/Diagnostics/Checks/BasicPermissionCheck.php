@@ -95,7 +95,7 @@ class BasicPermissionCheck implements DiagnosticCheckInterface
 		];
 
 		foreach ($disks as $disk) {
-			if ($disk->getDriver()->getAdapter() instanceof LocalFilesystemAdapter) {
+			if ($disk->getAdapter() instanceof LocalFilesystemAdapter) {
 				$this->checkDirectoryPermissionsRecursively($disk->path(''), $errors);
 			}
 		}
