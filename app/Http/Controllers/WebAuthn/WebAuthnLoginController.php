@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WebAuthn;
 
+use App\Exceptions\UnauthenticatedException;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
 use Laragear\WebAuthn\Http\Requests\AssertedRequest;
@@ -33,6 +34,6 @@ class WebAuthnLoginController
 	{
 		$content = $request->login();
 
-		return response()->noContent($content !== null ? 204 : 422);
+		return response()->noContent($content !== null ? 204 : throw new UnauthenticatedException('Invalid credentials'));
 	}
 }
