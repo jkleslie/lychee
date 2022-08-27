@@ -29,7 +29,7 @@ class WebAuthTest extends TestCase
 	{
 		Auth::loginUsingId(0);
 
-		$response = $this->postJson('/api/WebAuthn/register/gen');
+		$response = $this->postJson('/api/WebAuthn/register/options');
 		$response->assertOk();
 
 		$response = $this->postJson('/api/WebAuthn/register', [
@@ -46,7 +46,7 @@ class WebAuthTest extends TestCase
 		Auth::logout();
 		Session::flush();
 
-		$response = $this->postJson('/api/WebAuthn/login/gen', ['user_id' => 0]);
+		$response = $this->postJson('/api/WebAuthn/login/options', ['user_id' => 0]);
 		$response->assertOk();
 
 		$response = $this->postJson('/api/WebAuthn/login', [
