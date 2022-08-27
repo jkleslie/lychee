@@ -60,7 +60,7 @@ class WebAuthTest extends TestCase
 			],
 			'type' => 'public-key',
 		]);
-		$response->assertUnauthorized();
+		$response->assertStatus(422);
 
 		Auth::loginUsingId(0);
 
