@@ -41,7 +41,7 @@ class WebAuthTest extends TestCase
 			],
 			'type' => 'public-key',
 		]);
-		$response->assertForbidden();
+		$response->assertStatus(422);
 
 		Auth::logout();
 		Session::flush();
