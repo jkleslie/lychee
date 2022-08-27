@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\WebAuthn;
 
+use App\Exceptions\UnauthenticatedException;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class WebAuthnRegisterController
 	 */
 	public function options(AttestationRequest $request): Responsable
 	{
-		$request->user = Auth::user();
+		$request->user = Auth::user() ?? throw new UnauthenticatedException();
 
 		return $request
 			->fastRegistration()
@@ -38,7 +39,7 @@ class WebAuthnRegisterController
 	 */
 	public function register(AttestedRequest $request): Response
 	{
-		$request->user = Auth::user();
+		$request->user = Auth::user() ?? throw new UnauthenticatedException();
 
 		$request->save();
 
