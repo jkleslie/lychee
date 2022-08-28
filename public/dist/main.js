@@ -10937,8 +10937,8 @@ u2f.login = function () {
 	}
 
 	new WebAuthn({
-		login: "/api/WebAuthn/login",
-		loginOptions: "/api/WebAuthn/login/options"
+		login: "/api/WebAuthn::login",
+		loginOptions: "/api/WebAuthn::login/options"
 	}, {}, false).login({
 		user_id: 0 // for now it is only available to Admin user via a secret key shortcut.
 	}).then(function () {
@@ -10958,8 +10958,8 @@ u2f.register = function () {
 	}
 
 	var webauthn = new WebAuthn({
-		register: "/api/WebAuthn/register",
-		registerOptions: "/api/WebAuthn/register/options"
+		register: "/api/WebAuthn::register",
+		registerOptions: "/api/WebAuthn::register/options"
 	}, {}, false);
 	if (WebAuthn.supportsWebAuthn()) {
 		webauthn.register().then(function () {

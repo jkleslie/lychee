@@ -4,11 +4,11 @@ namespace App\Http\Controllers\WebAuthn;
 
 use App\Exceptions\UnauthenticatedException;
 use App\Models\User;
+use App\Pipelines\AssertionValidator;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Laragear\WebAuthn\Assertion\Validator\AssertionValidation;
-use Laragear\WebAuthn\Assertion\Validator\AssertionValidator;
 use Laragear\WebAuthn\Http\Requests\AssertedRequest;
 use Laragear\WebAuthn\Http\Requests\AssertionRequest;
 use function response;

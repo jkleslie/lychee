@@ -101,12 +101,12 @@ Route::post('/WebAuthn::list', [WebAuthn\WebAuthnManageController::class, 'list'
 Route::post('/WebAuthn::delete', [WebAuthn\WebAuthnManageController::class, 'delete']);
 
 // WebAuthn Routes
-Route::post('/WebAuthn/register/options', [\App\Http\Controllers\WebAuthn\WebAuthnRegisterController::class, 'options'])
+Route::post('/WebAuthn::register/options', [\App\Http\Controllers\WebAuthn\WebAuthnRegisterController::class, 'options'])
 	->name('webauthn.register.options');
-Route::post('/WebAuthn/register', [\App\Http\Controllers\WebAuthn\WebAuthnRegisterController::class, 'register'])
+Route::post('/WebAuthn::register', [\App\Http\Controllers\WebAuthn\WebAuthnRegisterController::class, 'register'])
 	->name('webauthn.register');
 
-Route::post('/WebAuthn/login/options', [\App\Http\Controllers\WebAuthn\WebAuthnLoginController::class, 'options'])
+Route::post('/WebAuthn::login/options', [\App\Http\Controllers\WebAuthn\WebAuthnLoginController::class, 'options'])
 	->name('webauthn.login.options');
-Route::post('/WebAuthn/login', [\App\Http\Controllers\WebAuthn\WebAuthnLoginController::class, 'login'])
+Route::post('/WebAuthn::login', [\App\Http\Controllers\WebAuthn\WebAuthnLoginController::class, 'login'])
 	->name('webauthn.login');
