@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\WebAuthn;
 
 use App\Exceptions\UnauthenticatedException;
+use App\Models\User;
 use Illuminate\Contracts\Support\Responsable;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
+use Laragear\WebAuthn\Assertion\Validator\AssertionValidation;
+use Laragear\WebAuthn\Assertion\Validator\AssertionValidator;
 use Laragear\WebAuthn\Http\Requests\AssertedRequest;
 use Laragear\WebAuthn\Http\Requests\AssertionRequest;
 use function response;
@@ -30,10 +34,18 @@ class WebAuthnLoginController
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function login(AssertedRequest $request): Response
+	public function login(AssertedRequest $request, AssertionValidator $assertion): Response
 	{
-		$content = $request->login();
+		$credential = $assertion
+		->send(new AssertionValidation($request, User::findOrFail(0)))
+		->thenReturn()->credential;
 
-		return response()->noContent($content !== null ? 204 : throw new UnauthenticatedException('Invalid credentials'));
+		if ($credential !== null) {
+			/** @var \Illuminate\Contracts\Auth\Authenticatable $authenticatable */
+			$authenticatable = $credential->authenticatable;
+			Auth::login($authenticatable);
+		}
+
+		return response()->noContent($credential !== null ? 204 : throw new UnauthenticatedException('Invalid credentials'));
 	}
 }
